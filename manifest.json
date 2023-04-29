@@ -1,0 +1,17 @@
+{
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "lang": "en",
+  "name": "biblegram",
+  "short_name": "biblegram",
+  "start_url": "/?utm_source=web_app_manifest",
+  "orientation": "portrait",
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "http://play.google.com/store/apps/details?id=com.lanyu.biblegram",
+      "id": "com.lanyu.biblegram"
+    }
+  ],
+  "prefer_related_applications": true
+}
