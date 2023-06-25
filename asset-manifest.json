@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/biblegram/static/js/main.0e093cab.js",
+    "main.js": "/biblegram/static/js/main.38fdff4a.js",
     "static/js/281.7051b6f4.js": "/biblegram/static/js/281.7051b6f4.js",
     "favicon.ico": "/biblegram/favicon.ico",
     "index.html": "/biblegram/index.html",
@@ -8,11 +8,11 @@
     "favicon-16.png": "/biblegram/favicon-16.png",
     "manifest.json": "/biblegram/manifest.json",
     "serve.json": "/biblegram/serve.json",
-    "main.0e093cab.js.map": "/biblegram/static/js/main.0e093cab.js.map",
+    "main.38fdff4a.js.map": "/biblegram/static/js/main.38fdff4a.js.map",
     "281.7051b6f4.js.map": "/biblegram/static/js/281.7051b6f4.js.map"
   },
   "entrypoints": [
     "static/js/281.7051b6f4.js",
-    "static/js/main.0e093cab.js"
+    "static/js/main.38fdff4a.js"
   ]
 }
