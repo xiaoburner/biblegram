@@ -75,7 +75,13 @@ export default function App() {
   useEffect(() => {
     const saved = loadState()
     const base  = buildInitialGuesses(puzzle.hints)
-    const merged = { ...base, ...(saved?.[dayNumber] || {}) }
+    const raw = saved?.[dayNumber] || {}
+    // Strip any corrupted non-letter guesses (e.g. '→' from old bug)
+    const clean = {}
+    for (const [k, v] of Object.entries(raw)) {
+      if (/^[a-z]$/.test(k) && /^[a-z]$/.test(v)) clean[k] = v
+    }
+    const merged = { ...base, ...clean }
     setGuesses(merged)
     setIsSolved(false)
     setSelectedPos(null)
@@ -124,7 +130,7 @@ export default function App() {
       return
     }
 
-    if (key === '->') {
+    if (key === '->' || key === '\u2192') {
       if (selectedPos == null) return
       const next = findNextUnfilledPos(puzzle.cipher, guesses, selectedPos)
       if (next != null) setSelectedPos(next)
@@ -132,6 +138,8 @@ export default function App() {
     }
 
     if (selectedPos == null) return
+    if (!/^[a-zA-Z]$/.test(key)) return   // only accept single letters
+
     const plain = key.toLowerCase()
     if (Object.values(puzzle.hints).includes(plain)) return
 
