@@ -28,6 +28,7 @@ export default function About({ open, onClose }) {
         zIndex: 300,
         backdropFilter: 'blur(4px)',
         WebkitBackdropFilter: 'blur(4px)',
+        cursor: 'pointer',
       }}
       onClick={onClose}
     >

@@ -32,6 +32,7 @@ export default function BibleChapter({ open, onClose, book, chapter }) {
         zIndex: 300,
         backdropFilter: 'blur(4px)',
         WebkitBackdropFilter: 'blur(4px)',
+        cursor: 'pointer',
       }}
       onClick={onClose}
     >

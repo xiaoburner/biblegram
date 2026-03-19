@@ -72,6 +72,7 @@ export default function PastPuzzles({ open, onClose, currentDay, latestDay, onSe
         zIndex: 300,
         backdropFilter: 'blur(4px)',
         WebkitBackdropFilter: 'blur(4px)',
+        cursor: 'pointer',
       }}
       onClick={onClose}
     >

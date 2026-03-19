@@ -27,6 +27,7 @@ export default function WinScreen({ puzzle, dayNumber, isLatest, onClose, onNext
         zIndex: 100,
         backdropFilter: 'blur(4px)',
         WebkitBackdropFilter: 'blur(4px)',
+        cursor: 'pointer', // iOS Safari requires this for onClick on divs
       }}
     >
       <div
@@ -36,10 +37,13 @@ export default function WinScreen({ puzzle, dayNumber, isLatest, onClose, onNext
           borderRadius: '24px 24px 0 0',
           width: '100%',
           maxWidth: 560,
+          maxHeight: '90dvh',
+          overflowY: 'auto',
           padding: '20px 28px 48px',
           transform: visible ? 'translateY(0)' : 'translateY(100%)',
           transition: 'transform 0.35s cubic-bezier(0.32, 0.72, 0, 1)',
           boxShadow: '0 -8px 40px rgba(0,0,0,0.3)',
+          cursor: 'default',
         }}
       >
         {/* Handle + close row */}
@@ -149,7 +153,7 @@ export default function WinScreen({ puzzle, dayNumber, isLatest, onClose, onNext
           </div>
         ) : (
           <button
-            onPointerDown={e => { e.preventDefault(); onNext() }}
+            onClick={onNext}
             style={{
               width: '100%',
               height: 54,
@@ -172,7 +176,7 @@ export default function WinScreen({ puzzle, dayNumber, isLatest, onClose, onNext
 
         {/* Past Puzzles link */}
         <button
-          onPointerDown={e => { e.preventDefault(); onPastPuzzles() }}
+          onClick={onPastPuzzles}
           style={{
             width: '100%',
             height: 50,
