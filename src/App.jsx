@@ -84,7 +84,12 @@ export default function App() {
 
     if (checkWin(puzzle.cipher, merged, correctMapping)) {
       setIsSolved(true)
-      setWinOpen(true)
+      // Already solved the latest puzzle — skip win screen, go straight to past puzzles
+      if (dayNumber >= latestDay) {
+        setPastPuzzlesOpen(true)
+      } else {
+        setWinOpen(true)
+      }
     } else {
       setSelectedPos(findNextUnfilledPos(puzzle.cipher, merged))
     }
