@@ -46,7 +46,6 @@ export default function App() {
   const [guesses, setGuesses]     = useState({})
   const [selectedPos, setSelectedPos] = useState(null)  // index into cipher string
   const [isSolved, setIsSolved]   = useState(false)
-  const [winOpen, setWinOpen]     = useState(false)
   const [menuOpen, setMenuOpen]           = useState(false)
   const [howToPlayOpen, setHowToPlayOpen]     = useState(false)
   const [pastPuzzlesOpen, setPastPuzzlesOpen] = useState(false)
@@ -79,12 +78,10 @@ export default function App() {
     const merged = { ...base, ...(saved?.[dayNumber] || {}) }
     setGuesses(merged)
     setIsSolved(false)
-    setWinOpen(false)
     setSelectedPos(null)
 
     if (checkWin(puzzle.cipher, merged, correctMapping)) {
       setIsSolved(true)
-      setWinOpen(true)
     } else {
       setSelectedPos(findNextUnfilledPos(puzzle.cipher, merged))
     }
@@ -98,7 +95,6 @@ export default function App() {
     const base = buildInitialGuesses(puzzle.hints)
     setGuesses(base)
     setIsSolved(false)
-    setWinOpen(false)
     setSelectedPos(findNextUnfilledPos(puzzle.cipher, base))
   }, [puzzle])
 
@@ -144,7 +140,6 @@ export default function App() {
 
     if (checkWin(puzzle.cipher, newGuesses, correctMapping)) {
       setIsSolved(true)
-      setWinOpen(true)
     } else {
       const nextPos = findNextUnfilledPos(puzzle.cipher, newGuesses, selectedPos)
       if (nextPos != null) setSelectedPos(nextPos)
@@ -207,16 +202,16 @@ export default function App() {
         onKeyPress={handleKeyPress}
       />
 
-      {isSolved && winOpen && (
+      {isSolved && (
         <WinScreen
           puzzle={puzzle}
           dayNumber={dayNumber}
           isLatest={dayNumber >= latestDay}
-          onClose={() => setWinOpen(false)}
-          onPastPuzzles={() => { setWinOpen(false); setPastPuzzlesOpen(true) }}
+          onClose={() => setIsSolved(false)}
           onNext={() => {
             if (dayNumber < latestDay) setDayNumber(d => d + 1)
           }}
+          onPastPuzzles={() => { setIsSolved(false); setPastPuzzlesOpen(true) }}
         />
       )}
 
