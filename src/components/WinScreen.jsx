@@ -3,7 +3,7 @@ import { useTheme } from '../contexts/ThemeContext'
 
 const WIN_ICON = '\u{1F64C}'
 
-export default function WinScreen({ puzzle, dayNumber, isLatest, onClose, onNext }) {
+export default function WinScreen({ puzzle, dayNumber, isLatest, onClose, onNext, onPastPuzzles }) {
   const { colors } = useTheme()
   const [visible, setVisible] = useState(false)
 
@@ -136,14 +136,14 @@ export default function WinScreen({ puzzle, dayNumber, isLatest, onClose, onNext
           </div>
         </div>
 
-        {/* Next / caught-up */}
+        {/* Next puzzle / caught-up */}
         {isLatest ? (
           <div style={{
             textAlign: 'center',
             fontFamily: "'Schoolbell', cursive",
             fontSize: 17,
             color: colors.textMuted,
-            padding: '12px 0',
+            padding: '4px 0 16px',
           }}>
             Come back tomorrow for the next puzzle!
           </div>
@@ -163,11 +163,31 @@ export default function WinScreen({ puzzle, dayNumber, isLatest, onClose, onNext
               cursor: 'pointer',
               touchAction: 'manipulation',
               boxShadow: `0 4px 16px ${colors.accent}66`,
+              marginBottom: 12,
             }}
           >
             Next Day -&gt;
           </button>
         )}
+
+        {/* Past Puzzles link */}
+        <button
+          onPointerDown={e => { e.preventDefault(); onPastPuzzles() }}
+          style={{
+            width: '100%',
+            height: 50,
+            background: 'none',
+            border: `2px solid ${colors.border}`,
+            borderRadius: 14,
+            fontFamily: "'Schoolbell', cursive",
+            fontSize: 17,
+            color: colors.textSecondary,
+            cursor: 'pointer',
+            touchAction: 'manipulation',
+          }}
+        >
+          Browse Past Puzzles
+        </button>
       </div>
     </div>
   )

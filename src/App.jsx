@@ -84,12 +84,7 @@ export default function App() {
 
     if (checkWin(puzzle.cipher, merged, correctMapping)) {
       setIsSolved(true)
-      // Already solved the latest puzzle — skip win screen, go straight to past puzzles
-      if (dayNumber >= latestDay) {
-        setPastPuzzlesOpen(true)
-      } else {
-        setWinOpen(true)
-      }
+      setWinOpen(true)
     } else {
       setSelectedPos(findNextUnfilledPos(puzzle.cipher, merged))
     }
@@ -216,6 +211,7 @@ export default function App() {
           dayNumber={dayNumber}
           isLatest={dayNumber >= latestDay}
           onClose={() => setWinOpen(false)}
+          onPastPuzzles={() => { setWinOpen(false); setPastPuzzlesOpen(true) }}
           onNext={() => {
             if (dayNumber < latestDay) setDayNumber(d => d + 1)
           }}
