@@ -139,14 +139,16 @@ export default function App() {
     const plain = key.toLowerCase()
     if (Object.values(puzzle.hints).includes(plain)) return
 
-    setGuesses(prev => {
-      const next = { ...prev, [selectedCipherChar]: plain }
-      if (checkWin(puzzle.cipher, next, correctMapping)) { setIsSolved(true); setWinOpen(true) }
-      return next
-    })
+    const newGuesses = { ...guesses, [selectedCipherChar]: plain }
+    setGuesses(newGuesses)
 
-    const nextPos = findNextUnfilledPos(puzzle.cipher, { ...guesses, [selectedCipherChar]: plain }, selectedPos)
-    if (nextPos != null) setSelectedPos(nextPos)
+    if (checkWin(puzzle.cipher, newGuesses, correctMapping)) {
+      setIsSolved(true)
+      setWinOpen(true)
+    } else {
+      const nextPos = findNextUnfilledPos(puzzle.cipher, newGuesses, selectedPos)
+      if (nextPos != null) setSelectedPos(nextPos)
+    }
   }, [selectedPos, selectedCipherChar, guesses, puzzle, correctMapping, isSolved])
 
   // Physical keyboard
