@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useTheme } from '../contexts/ThemeContext'
 
-const WIN_ICON = '\u{1F64C}' // raised hands — UI display value, not a literal emoji in code
+const WIN_ICON = '\u{1F64C}'
 
-export default function WinScreen({ puzzle, dayNumber, isLatest, onNext }) {
+export default function WinScreen({ puzzle, dayNumber, isLatest, onClose, onNext }) {
   const { colors } = useTheme()
   const [visible, setVisible] = useState(false)
 
@@ -15,43 +15,65 @@ export default function WinScreen({ puzzle, dayNumber, isLatest, onNext }) {
   const phrase = puzzle.phrase.charAt(0).toUpperCase() + puzzle.phrase.slice(1)
 
   return (
-    <div style={{
-      position: 'fixed',
-      inset: 0,
-      background: 'rgba(0, 0, 0, 0.75)',
-      display: 'flex',
-      alignItems: 'flex-end',
-      justifyContent: 'center',
-      zIndex: 100,
-      backdropFilter: 'blur(4px)',
-      WebkitBackdropFilter: 'blur(4px)',
-    }}>
-      <div style={{
-        background: colors.winBg,
-        borderRadius: '24px 24px 0 0',
-        width: '100%',
-        maxWidth: 560,
-        padding: '32px 28px 40px',
-        transform: visible ? 'translateY(0)' : 'translateY(100%)',
-        transition: 'transform 0.35s cubic-bezier(0.32, 0.72, 0, 1)',
-        boxShadow: '0 -8px 40px rgba(0,0,0,0.3)',
-      }}>
-        {/* Handle */}
-        <div style={{
-          width: 36,
-          height: 4,
-          background: colors.winHandle,
-          borderRadius: 99,
-          margin: '0 auto 24px',
-        }} />
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        background: 'rgba(0, 0, 0, 0.75)',
+        display: 'flex',
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+        zIndex: 100,
+        backdropFilter: 'blur(4px)',
+        WebkitBackdropFilter: 'blur(4px)',
+      }}
+    >
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{
+          background: colors.winBg,
+          borderRadius: '24px 24px 0 0',
+          width: '100%',
+          maxWidth: 560,
+          padding: '20px 28px 48px',
+          transform: visible ? 'translateY(0)' : 'translateY(100%)',
+          transition: 'transform 0.35s cubic-bezier(0.32, 0.72, 0, 1)',
+          boxShadow: '0 -8px 40px rgba(0,0,0,0.3)',
+        }}
+      >
+        {/* Handle + close row */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
+          <div style={{ width: 34 }} />
+          <div style={{
+            width: 36, height: 4,
+            background: colors.winHandle,
+            borderRadius: 99,
+          }} />
+          <button
+            onClick={onClose}
+            style={{
+              background: colors.menuClose,
+              border: 'none',
+              borderRadius: 8,
+              width: 34, height: 34,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 18,
+              cursor: 'pointer',
+              color: colors.menuCloseText,
+              touchAction: 'manipulation',
+              flexShrink: 0,
+            }}
+          >
+            &#x2715;
+          </button>
+        </div>
 
-        {/* Celebration icon — value lives in data, not scattered in JSX */}
+        {/* Celebration icon */}
         <div style={{
           fontSize: 56,
           textAlign: 'center',
           marginBottom: 12,
-          animation: 'float 1.6s ease-in-out infinite',
-          display: 'block',
           lineHeight: 1,
         }}>
           {WIN_ICON}
@@ -70,10 +92,7 @@ export default function WinScreen({ puzzle, dayNumber, isLatest, onNext }) {
         </div>
 
         {/* Topic pill */}
-        <div style={{
-          textAlign: 'center',
-          marginBottom: 20,
-        }}>
+        <div style={{ textAlign: 'center', marginBottom: 20 }}>
           <span style={{
             background: colors.accentPill,
             color: colors.accentSoft,
@@ -97,6 +116,7 @@ export default function WinScreen({ puzzle, dayNumber, isLatest, onNext }) {
           borderLeft: `4px solid ${colors.accent}`,
         }}>
           <div style={{
+            fontFamily: "'Schoolbell', cursive",
             fontSize: 17,
             fontWeight: 700,
             color: colors.textPrimary,
@@ -107,6 +127,7 @@ export default function WinScreen({ puzzle, dayNumber, isLatest, onNext }) {
             "{phrase}"
           </div>
           <div style={{
+            fontFamily: "'Schoolbell', cursive",
             fontSize: 13,
             fontWeight: 700,
             color: colors.textSecondary,
@@ -115,7 +136,7 @@ export default function WinScreen({ puzzle, dayNumber, isLatest, onNext }) {
           </div>
         </div>
 
-        {/* Next / caught-up state */}
+        {/* Next / caught-up */}
         {isLatest ? (
           <div style={{
             textAlign: 'center',
@@ -128,7 +149,7 @@ export default function WinScreen({ puzzle, dayNumber, isLatest, onNext }) {
           </div>
         ) : (
           <button
-            onPointerDown={(e) => { e.preventDefault(); onNext() }}
+            onPointerDown={e => { e.preventDefault(); onNext() }}
             style={{
               width: '100%',
               height: 54,
